@@ -1,0 +1,2 @@
+# global transformation to handle @SourceGrab annotation
+com.sourcegrape.SourceGrabAnnotationTransformation

@@ -47,8 +47,6 @@ public class GitGrape {
     }
     
     private void cloneRepo(File repoDir) {
-        System.out.println("Getting repository: " + getRepositoryUri());
-        
         try {
             String repoUri = getRepositoryUri();
             Git.cloneRepository()
@@ -62,8 +60,6 @@ public class GitGrape {
     }
     
     private void pullRepo(File repoDir) {
-        System.out.println("Updating repository: " + getRepositoryUri());
-                
         Git git = null;
         try {
             FileRepositoryBuilder builder = new FileRepositoryBuilder();

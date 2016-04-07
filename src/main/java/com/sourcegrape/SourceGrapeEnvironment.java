@@ -55,6 +55,7 @@ public class SourceGrapeEnvironment {
         return cache;
     }
     
+    @SuppressWarnings("rawtypes")
     public ClassLoader chooseClassLoader(Map args) {
         ClassLoader loader = (ClassLoader) args.get("classLoader");
         if (!isValidTargetClassLoader(loader)) {

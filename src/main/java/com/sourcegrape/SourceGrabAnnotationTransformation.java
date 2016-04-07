@@ -36,14 +36,14 @@ public class SourceGrabAnnotationTransformation  extends ClassCodeVisitorSupport
     private static final String GRAB_CLASS_NAME = SourceGrab.class.getName();
     private static final String GRAB_DOT_NAME = GRAB_CLASS_NAME.substring(GRAB_CLASS_NAME.lastIndexOf("."));
     private static final String GRAB_SHORT_NAME = GRAB_DOT_NAME.substring(1);
-    
+
     private boolean allowShortGrab;
     private Set<String> grabAliases;
     private List<AnnotationNode> grabAnnotations;
 
     private CompilationUnit compilationUnit;
     private SourceUnit sourceUnit;
-    
+
     /**
      * Adds the annotation to the internal target list if a match is found.
      *
@@ -67,14 +67,12 @@ public class SourceGrabAnnotationTransformation  extends ClassCodeVisitorSupport
         return sourceUnit;
     }
 
-    //@Override
     public void setCompilationUnit(final CompilationUnit compilationUnit) {
         this.compilationUnit = compilationUnit;
     }
 
-    //@Override
     public void visit(ASTNode[] nodes, SourceUnit source) {
-        
+
         sourceUnit = source;
         ModuleNode moduleNode = (ModuleNode) nodes[0];
 
@@ -104,7 +102,7 @@ public class SourceGrabAnnotationTransformation  extends ClassCodeVisitorSupport
         }
         return grabNodes;
     }
-    
+
     private void configureAnnotationAliasesFromImports(ModuleNode moduleNode) {
         allowShortGrab = true;
         grabAliases = new HashSet<String>();
@@ -147,12 +145,12 @@ public class SourceGrabAnnotationTransformation  extends ClassCodeVisitorSupport
                     urls.add(grabNode.getUri());
                 }
                 SourceGrape.grab(sourceUnit.getClassLoader(), urls.toArray(new String[0]));
-                
+
                 // SourceGrab may have added more transformations through new URLs added to classpath, so do one more scan
                 if (compilationUnit!=null) {
                     ASTTransformationVisitor.addGlobalTransformsAfterGrab(compilationUnit.getASTTransformationsContext());
                 }
-                
+
             } catch (RuntimeException re) {
                 // Decided against syntax exception since this is not a syntax error.
                 // The down side is we lose line number information for the offending
@@ -164,7 +162,7 @@ public class SourceGrabAnnotationTransformation  extends ClassCodeVisitorSupport
 
     private static class SourceGrabNode {
         private AnnotationNode node;
-        
+
         public SourceGrabNode(AnnotationNode node) {
             this.node = node;
         }
@@ -172,7 +170,7 @@ public class SourceGrabAnnotationTransformation  extends ClassCodeVisitorSupport
         public boolean isInitClass() {
             return ((node.getMember("initClass") == null) || (node.getMember("initClass") == ConstantExpression.TRUE));
         }
-        
+
         public String getUri() {
             String uri = getMemberStringValue("uri");
             if (uri == null) {
@@ -184,7 +182,7 @@ public class SourceGrabAnnotationTransformation  extends ClassCodeVisitorSupport
         private String getMemberStringValue(String name) {
             return getMemberStringValue(name, null);
         }
-        
+
         private String getMemberStringValue(String name, String defaultValue) {
             final Expression member = node.getMember(name);
             if (member != null && member instanceof ConstantExpression) {
