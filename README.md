@@ -5,7 +5,6 @@ Example of use:
 
 ```groovy
 // Load SourceGrape artifact from the Maven repo
-@GrabResolver(name='bintray-andresviedma-maven', root='http://dl.bintray.com/andresviedma/maven')
 @Grab('com.sourcegrape:sourcegrape')
 import com.sourcegrape.*
 
